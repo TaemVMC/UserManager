@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+.build/
+logs
 
 ### STS ###
 .apt_generated
@@ -35,3 +37,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### mac OS ###
+.DS_Store
+
+### db ###
+*.db
