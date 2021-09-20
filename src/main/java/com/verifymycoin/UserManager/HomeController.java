@@ -21,9 +21,9 @@ public class HomeController {
     @GetMapping("/")
     public String home(
             @RequestParam(name = "code") String code) throws Exception {
-        userController.findAllUser();
+//        userController.findAllUser();
 //        userController.signup(code);
-        userController.signin(code);
+//        userController.signin(code);
 
         return "";
     }

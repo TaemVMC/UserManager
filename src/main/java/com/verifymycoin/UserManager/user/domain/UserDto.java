@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class UserDto {
+    public String userId;
     public String name;
     public String picture;
     public String givenName;
     public String familyName;
+    public String email;
 }

@@ -1,14 +1,11 @@
 package com.verifymycoin.UserManager.GoogleAuth;
 
-import com.verifymycoin.UserManager.exception.BizException;
-import com.verifymycoin.UserManager.exception.CodeMessage;
 import com.verifymycoin.UserManager.exception.ResponseCodeMessage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class GoogleOauth implements SocialOauth {
     private final String GOOGLE_SNS_CALLBACK_URL = "http://localhost:8080";
-    private final String GOOGLE_SNS_TOKEN_BASE_URL_Ver4 = "https://www.googleapis.com/oauth2/v4/token";
+    private final String GOOGLE_SNS_TOKEN_BASE_URL_VER4 = "https://www.googleapis.com/oauth2/v4/token";
     @Value("${google.client_id}")
     public String GOOGLE_SNS_CLIENT_ID ;
     @Value("${google.client_secret}")
@@ -43,7 +40,7 @@ public class GoogleOauth implements SocialOauth {
         try {
             RestTemplate restTemplate = new RestTemplate();
             Map<String, Object> params = getStringObjectMapForGoogleToken(code);
-            ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_SNS_TOKEN_BASE_URL_Ver4, params, String.class);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_SNS_TOKEN_BASE_URL_VER4, params, String.class);
             log.debug("Google User Info {} : ", responseEntity.getBody());
             return responseEntity;
         } catch (Exception e) {

@@ -21,6 +21,8 @@ public class User {
     public String picture;
     public String givenName;
     public String familyName;
+    public String userId;
+    public String email;
 
 
     public static User transToUser(JSONObject jsonObject) {
@@ -30,6 +32,7 @@ public class User {
                 .givenName(jsonObject.getString("given_name"))
                 .familyName(jsonObject.getString("family_name"))
                 .picture(jsonObject.getString("picture"))
+                .email(jsonObject.getString("email"))
                 .build();
     }
 }

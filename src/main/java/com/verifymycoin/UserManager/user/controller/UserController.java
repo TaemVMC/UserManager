@@ -1,6 +1,7 @@
 package com.verifymycoin.UserManager.user.controller;
 
 
+import com.verifymycoin.UserManager.user.domain.User;
 import com.verifymycoin.UserManager.user.domain.UserDto;
 import com.verifymycoin.UserManager.user.service.UserService;
 import io.swagger.annotations.*;
@@ -11,13 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
 @Api(tags = "users")
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -44,7 +46,9 @@ public class UserController {
     public ResponseEntity<UserDto> signin(@ApiParam("Signup User")
                                          @RequestBody String code) throws Exception {
         log.info(">> 소셜 로그인 API client 받은 code :: {}", code);
-        return ResponseEntity.ok(modelMapper.map(userService.signin(code), UserDto.class));
+
+        return ResponseEntity.ok(new UserDto("1234", "test", "/url", "test given name" , "test family name"));
+//        return ResponseEntity.ok(modelMapper.map(userService.signin(code), UserDto.class));
     }
 
    @PostMapping("/withdrawal")
@@ -70,10 +74,14 @@ public class UserController {
     @GetMapping("/allUserInfo")
     public ResponseEntity<List<UserDto>> findAllUser() {
         log.info("getAllUserInfo API");
+//        log.info("request header value : {}", header);
         return ResponseEntity.ok(
                 userService
                         .findAll()
-                        .stream().map(user -> modelMapper.map(user, UserDto.class))
+                        .stream().map(user -> {
+                            user.setUserId(user.getId());
+                            return modelMapper.map(user, UserDto.class);
+                        })
                         .collect(Collectors.toList()));
     }
 }
