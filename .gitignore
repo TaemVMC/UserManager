@@ -43,3 +43,7 @@ out/
 
 ### db ###
 *.db
+
+
+### security ###
+**/**/application-oauth.yml
