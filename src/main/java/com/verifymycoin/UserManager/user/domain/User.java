@@ -1,28 +1,33 @@
 package com.verifymycoin.UserManager.user.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import static java.lang.Boolean.TRUE;
 
 
 @Document(collection = "users")
 @Builder
 @NoArgsConstructor @AllArgsConstructor @Data
 public class User {
+
     @Id
     public String id;
 
+    @Indexed(unique = true)
     public String sub;
     public String name;
     public String picture;
     public String givenName;
     public String familyName;
     public String userId;
+    public String locale;
     public String email;
+    public boolean verifiedEmail;
 
 
     public static User transToUser(JSONObject jsonObject) {
@@ -33,6 +38,10 @@ public class User {
                 .familyName(jsonObject.getString("family_name"))
                 .picture(jsonObject.getString("picture"))
                 .email(jsonObject.getString("email"))
+                .verifiedEmail(jsonObject.getBoolean("verified_email"))
+                .locale(jsonObject.getString("locale"))
                 .build();
     }
+
+
 }

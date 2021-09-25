@@ -1,7 +1,7 @@
 spring :
   data:
     mongodb:
-      uri: mongodb://localhost:27017/admin
+      uri: mongodb://localhost:27017/test
 #  session :
 #  storage-type : redis
 #  redis :

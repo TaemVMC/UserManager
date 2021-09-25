@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,12 +21,11 @@ public class HomeController {
     UserController userController;
 
     @GetMapping("/")
-    public String home(
-            @RequestParam(name = "code") String code) throws Exception {
+    public String home() throws Exception {
 //        userController.findAllUser();
 //        userController.signup(code);
 //        userController.signin(code);
-
+//        System.out.println(request.headers());
         return "";
     }
 

@@ -1,21 +1,14 @@
 package com.verifymycoin.UserManager.user.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verifymycoin.UserManager.GoogleAuth.GoogleOauth;
-import com.verifymycoin.UserManager.exception.BizException;
 import com.verifymycoin.UserManager.exception.ResponseCodeMessage;
 import com.verifymycoin.UserManager.user.domain.User;
-import com.verifymycoin.UserManager.user.domain.UserDto;
 import com.verifymycoin.UserManager.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,18 +18,27 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User signin(String code) throws Exception {
-        User userForSignIn = User.transToUser(googleOauth.getUserInfo(code));
-        exceptionHandingWithinSignIn(userForSignIn);
-        return this.getBySub(userForSignIn.getSub());
+    public User signin(String googleToken, String idToken) throws Exception {
+        User userForSignIn = User.transToUser(googleOauth.getUserInfoByGoogleApi(googleToken, idToken));
+//        exceptionHandingWithinSignIn(userForSignIn);
+
+//        return this.findBySub(userForSignIn.getSub()).orElse(this.save(userForSignIn));
+//        TODO : add save function
+        return this.findBySub(userForSignIn.getSub()).get();
     }
 
     @Override
     public User signup(String code) throws Exception {
 //        check
-        User userForSave = User.transToUser(googleOauth.getUserInfo(code));
-        exceptionHandingWithinSignUp(userForSave);
-        return this.save(userForSave);
+//        User userForSave = User.transToUser(googleOauth.getUserInfoByGoogleApi(code));
+//        exceptionHandingWithinSignUp(userForSave);
+//        return this.save(userForSave);
+        return null;
+    }
+
+    @Override
+    public Optional<User> findBySub(String sub) {
+        return userRepository.findBySub(sub);
     }
 
     private void exceptionHandingWithinSignIn(User user) {
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) {
+        System.out.println("save1!!!!! user!!! wjy??      " + entity.getSub() + "   " + entity.getEmail());
         return userRepository.save(entity);
     }
 
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getBySub(String sub) {
+    public Optional<User> getBySub(String sub) {
         return userRepository.getBySub(sub);
     }
     @Override
@@ -80,6 +83,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+//    deprecated
     @Override
     public User getById(String id) {
         return userRepository.getById(id);
@@ -106,6 +110,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(String id) {
+        userRepository.deleteById(id);
 
     }
 

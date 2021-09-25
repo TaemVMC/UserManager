@@ -13,9 +13,10 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User, String> {
     boolean existsBySub(String sub);
 
-    User getBySub(String sub);
+    Optional<User> getBySub(String sub);
 
     Optional<User> findById(String id);
+    Optional<User> findBySub(String sub);
     User getById(String id);
 
 //    @Query("select u from User u where u.username = :username and u.password = :password")
