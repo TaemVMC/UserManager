@@ -1,7 +1,8 @@
 package com.verifymycoin.UserManager.user.service;
 
 import com.verifymycoin.UserManager.GoogleAuth.GoogleOauth;
-import com.verifymycoin.UserManager.exception.ResponseCodeMessage;
+import com.verifymycoin.UserManager.common.exception.custom.UserNotExist;
+
 import com.verifymycoin.UserManager.user.domain.User;
 import com.verifymycoin.UserManager.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +17,27 @@ public class UserServiceImpl implements UserService {
     private final GoogleOauth googleOauth;
     private final UserRepository userRepository;
 
-
     @Override
-    public User signin(String googleToken, String idToken) throws Exception {
+    public User signin(String googleToken, String idToken){
         User userForSignIn = User.transToUser(googleOauth.getUserInfoByGoogleApi(googleToken, idToken));
-//        exceptionHandingWithinSignIn(userForSignIn);
+        Optional<User> userInRepository = userRepository.findBySub(userForSignIn.getSub());
 
-//        return this.findBySub(userForSignIn.getSub()).orElse(this.save(userForSignIn));
-//        TODO : add save function
-        return this.findBySub(userForSignIn.getSub()).get();
+        // TODO : Optional한 로직으로 수정필요
+        if(userInRepository.isPresent()){
+            return userInRepository.get();
+        }
+        return userInRepository.orElse(this.save(userForSignIn));
     }
+
+//    @Override
+//    public User signin(String googleToken, String idToken) throws Exception {
+//        User userForSignIn = User.transToUser(googleOauth.getUserInfoByGoogleApi(googleToken, idToken));
+////        exceptionHandingWithinSignIn(userForSignIn);
+//
+//        return this.findBySub(userForSignIn.getSub()).orElse(this.save(userForSignIn));
+////        TODO : add save function
+////        return this.findBySub(userForSignIn.getSub()).get();
+//    }
 
     @Override
     public User signup(String code) throws Exception {
@@ -39,18 +51,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findBySub(String sub) {
         return userRepository.findBySub(sub);
-    }
-
-    private void exceptionHandingWithinSignIn(User user) {
-        if (!existsBySub(user.getSub())) {
-            throw ResponseCodeMessage.ERROR_0003.exception();
-        }
-    }
-
-    private void exceptionHandingWithinSignUp(User user) {
-        if (existsBySub(user.getSub())) {
-            throw ResponseCodeMessage.ERROR_0002.exception();
-        }
     }
 
     @Override
@@ -78,17 +78,20 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getBySub(String sub) {
         return userRepository.getBySub(sub);
     }
+
     @Override
-    public Optional<User> findById(String id) {
-        return userRepository.findById(id);
+    public Optional<User> findByUserId(String userId) {
+        if(userRepository.findById(userId).isEmpty()){
+            throw new UserNotExist();
+        }
+        return userRepository.findById(userId);
     }
 
 //    deprecated
     @Override
-    public User getById(String id) {
-        return userRepository.getById(id);
+    public User getByUserId(String userId) {
+        return userRepository.getByUserId(userId);
     }
-
 
 
     @Override
@@ -96,30 +99,14 @@ public class UserServiceImpl implements UserService {
         return Optional.empty();
     }
 
-    @Override
-    public boolean existById(String id) {
-        return false;
-    }
 
     @Override
-    public int count() {
-        return 0;
+    public void deleteByUserId(String userId) {
+        if(!userRepository.findById(userId).isPresent()){
+            throw new UserNotExist();
+        }
+        userRepository.deleteById(userId);
     }
-
-
-
-    @Override
-    public void deleteById(String id) {
-        userRepository.deleteById(id);
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-
-
 
 
 }

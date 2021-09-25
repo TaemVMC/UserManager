@@ -1,11 +1,11 @@
 package com.verifymycoin.UserManager.GoogleAuth;
 
-import com.verifymycoin.UserManager.exception.ResponseCodeMessage;
+import com.verifymycoin.UserManager.common.exception.custom.GoogleOauthUnexpectedException;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,8 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 @Component
@@ -45,18 +44,20 @@ public class GoogleOauth{
     public JSONObject getUserInfoByGoogleApi(String goolgeToken, String idToken) {
         try {
             ResponseEntity<String> response = getStringResponseEntity(goolgeToken);
+
             JSONObject jsonObject = new JSONObject(response.getBody());
             JSONObject decodeIdToken = decodeIdTokenToJsonObj(idToken);
             jsonObject.put("sub", decodeIdToken.getString("sub"));
-            log.debug("Decoding Google Id TOKEN {} ", decodeIdToken);
-            log.debug("Google User Info {} : ", response.getBody());
+//            System.out.println("jsonObject = " + jsonObject);
             return  jsonObject;
         } catch (Exception e) {
-            throw ResponseCodeMessage.ERROR_0001.exception(e.getMessage());
+//            e.printStackTrace();
+            throw new GoogleOauthUnexpectedException();
         }
     }
 
     private ResponseEntity<String> getStringResponseEntity(String goolgeToken) {
+        //TODO : Google에서 401 응답왔을 때 처리
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", goolgeToken);

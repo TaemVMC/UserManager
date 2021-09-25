@@ -9,16 +9,16 @@ import java.util.Optional;
 @Component
 public interface UserService {
     List<User> findAll();
-    Optional<User> findById(String id);
+    Optional<User> findByUserId(String userId);
     Optional<User> findByUsername(String username);
-    boolean existById(String id);
-    int count();
+
     User save(User entity);
-    void deleteById(String id);
-    void deleteAll();
-    User getById(String id);      //없을 수가 없는 값에는 optional 걸지 않음 (있는게 확실할 때 )
+    void deleteByUserId(String userId);
+
+    User getByUserId(String userId);      //없을 수가 없는 값에는 optional 걸지 않음 (있는게 확실할 때 )
     Optional<User> getBySub(String sub);      //없을 수가 없는 값에는 optional 걸지 않음 (있는게 확실할 때 )
     boolean existsBySub(String sub);
+
     User signin(String googleToken, String idToken) throws Exception;
     User signup(String code) throws Exception;
 

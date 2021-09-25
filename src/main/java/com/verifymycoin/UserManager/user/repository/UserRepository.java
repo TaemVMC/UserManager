@@ -15,9 +15,9 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> getBySub(String sub);
 
-    Optional<User> findById(String id);
+    Optional<User> findByUserId(String userId);
     Optional<User> findBySub(String sub);
-    User getById(String id);
+    User getByUserId(String userId);
 
 //    @Query("select u from User u where u.username = :username and u.password = :password")
 //    User signin(@Param("username") String username, @Param("password") String password);

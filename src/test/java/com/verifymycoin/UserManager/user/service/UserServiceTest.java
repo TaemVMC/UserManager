@@ -43,14 +43,14 @@ class UserServiceTest {
     void existsBySub() {
 //        save
         User user = User.builder()
-                .id("1234")
+                .userId("1234")
                 .name("test")
                 .sub("1234567")
                 .familyName("familyNameTest")
                 .picture("/picture/url")
                 .build();
-        assertThat(user.getId(), is(equalTo("1234")));
-        userService.findById("1234");
+        assertThat(user.getUserId(), is(equalTo("1234")));
+        userService.findByUserId("1234");
     }
 
 
@@ -58,13 +58,13 @@ class UserServiceTest {
     void save() {
 //        save
         User user = User.builder()
-                .id("1234")
+                .userId("1234")
                 .name("test")
                 .sub("1234567")
                 .familyName("familyNameTest")
                 .picture("/picture/url")
                 .build();
-        assertThat(user.getId(), is(equalTo("1234")));
+        assertThat(user.getUserId(), is(equalTo("1234")));
         userService.save(user);
         verify(userRepository).save(user);
     }

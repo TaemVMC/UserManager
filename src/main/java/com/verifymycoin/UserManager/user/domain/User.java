@@ -2,12 +2,11 @@ package com.verifymycoin.UserManager.user.domain;
 
 import lombok.*;
 import org.json.JSONObject;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import static java.lang.Boolean.TRUE;
+
 
 
 @Document(collection = "users")
@@ -16,7 +15,7 @@ import static java.lang.Boolean.TRUE;
 public class User {
 
     @Id
-    public String id;
+    public String userId;
 
     @Indexed(unique = true)
     public String sub;
@@ -24,7 +23,6 @@ public class User {
     public String picture;
     public String givenName;
     public String familyName;
-    public String userId;
     public String locale;
     public String email;
     public boolean verifiedEmail;
