@@ -15,4 +15,4 @@ spring :
 #      security-key: secret-key
 #      expiration-length: 3600000
 server:
-  port: 8003
+  port: 8001

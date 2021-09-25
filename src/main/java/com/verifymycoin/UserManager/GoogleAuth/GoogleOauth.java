@@ -39,10 +39,6 @@ public class GoogleOauth{
     /*
     https://www.googleapis.com/oauth2/v1/userinfo?alt=json
      */
-    @Value("${google.client_id}")
-    public String GOOGLE_SNS_CLIENT_ID ;
-    @Value("${google.client_secret}")
-    public String GOOGLE_SNS_CLIENT_SECRET;
 
     private final String GOOGLE_SNS_GET_USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
 
