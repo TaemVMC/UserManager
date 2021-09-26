@@ -39,13 +39,14 @@ jobs:
 #       run: ./gradlew clean build
       
     - name: Save pem to file
-      run: 'echo "$EC2_PEM" > vmc.pem && chmod 400 vmc.pem'
+      run: 'echo "$EC2_PEM" > .vmc.pem && chmod 400 .vmc.pem'
       shell: bash
       env:
         EC2_PEM: ${{secrets.EC2_PEM}}
 
     - name: Send file to EC2
-      run: scp -i "/.vmc.pem" build/libs/UserManager-0.0.1-SNAPSHOT.jar ubuntu@${{ github.event.inputs.destination_server }}:/home/ubuntu/ 
+#       run: scp -i ".vmc.pem" build/libs/UserManager-0.0.1-SNAPSHOT.jar ubuntu@${{ github.event.inputs.destination_server }}:/home/ubuntu/ 
+      run: scp -i ".vmc.pem" Dockerfile ubuntu@${{ github.event.inputs.destination_server }}:/home/ubuntu/ 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
 #     - name: Publish to GitHub Packages
