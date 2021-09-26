@@ -62,7 +62,7 @@ jobs:
         username: ubuntu
         key_path: ".vmc.pem"
         script: |
-           ps aux | grep -i ${{ github.event.inputspackage_name }} | head -n 1| awk {'print $2'} | xargs kill -9
+           ps aux | grep -i ${{ github.event.inputs.package_name }} | head -n 1| awk {'print $2'} | xargs kill -9
            SPRING_PROFILES_ACTIVE=prod java -jar ${{ github.event.inputspackage_name }}
 
 # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
