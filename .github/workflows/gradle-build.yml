@@ -13,6 +13,14 @@ on:
         description: 'Server to deploy'
         required: True
         default: '13.124.249.181'
+      service_name:
+        description: 'Service name'
+        required: True
+        default: 'UserManager'
+      profiles:
+        description: 'Profiles'
+        required: True
+        default: 'prod'
       package_name:
         description: 'Package to deploy'
         required: True
@@ -47,14 +55,17 @@ jobs:
       shell: bash
       env:
         EC2_PEM: ${{secrets.EC2_PEM}}
+        
     - name: Send jar file to EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{ github.event.inputs.destination_server }}
         username: ubuntu
         key_path: ".vmc.pem"
-        source: build/libs/${{ github.event.inputspackage_name }}
-        target: "/home/ubuntu/"
+        source: "build/libs/${{ github.event.inputs.package_name }}"
+        target: "/home/ubuntu"
+        strip_components: 2
+        
     - name: Rerun new jar
       uses: appleboy/ssh-action@master
       with:
@@ -62,9 +73,9 @@ jobs:
         username: ubuntu
         key_path: ".vmc.pem"
         script: |
-           ps aux | grep -i ${{ github.event.inputs.package_name }} | head -n 1| awk {'print $2'} | xargs kill -9
-           SPRING_PROFILES_ACTIVE=prod java -jar ${{ github.event.inputspackage_name }}
-
+            ./rerun.sh ${{ github.event.inputs.service_name }} ${{ github.event.inputs.package_name }}
+            
+           
 # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
 #     - name: Publish to GitHub Packages
