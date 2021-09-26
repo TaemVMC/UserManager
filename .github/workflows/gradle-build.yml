@@ -35,11 +35,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew clean build
+#     - name: Build with Gradle
+#       run: ./gradlew clean build
       
     - name: Save pem to file
-      run: 'echo "$EC2_PEM" > /.vmc.pem'
+      run: 'echo "$EC2_PEM" > vmc.pem && chmod 400 vmc.pem'
       shell: bash
       env:
         EC2_PEM: ${{secrets.EC2_PEM}}
