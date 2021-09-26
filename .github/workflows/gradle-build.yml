@@ -37,8 +37,12 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew clean build
+      
     - name: Save pem to file
-      run: printf ${{ secrets.EC2_PEM }} >> src/.env
+      run: 'echo "$EC2_PEM" > /.vmc.pem'
+      shell: bash
+      env:
+        EC2_PEM: ${{secrets.EC2_PEM}}
 
     - name: Send file to EC2
       run: scp -i "/.vmc.pem" build/libs/UserManager-0.0.1-SNAPSHOT.jar ubuntu@${{ github.event.inputs.destination_server }}:/home/ubuntu/ 
