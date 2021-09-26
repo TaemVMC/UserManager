@@ -1,18 +1,7 @@
+server:
+  port: 8001
 spring :
   data:
     mongodb:
       uri: mongodb://localhost:27017/UserManager
-#  session :
-#  storage-type : redis
-#  redis :
-#    host : localhost
-#    port : 6379
-  profiles:
-    include: oauth
-#security:
-#  jwt:
-#    token:
-#      security-key: secret-key
-#      expiration-length: 3600000
-server:
-  port: 8001
+foo: bar-default

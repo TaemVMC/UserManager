@@ -28,70 +28,68 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = UserControllerTest.class)
 @DisplayName("UserController Test")
 class UserControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
-    private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-        ModelMapper modelMapper = new ModelMapper();
-        mockMvc = MockMvcBuilders.standaloneSetup(
-                new UserController(userService, modelMapper)
-        ).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
-    }
-
-    @Test
-    @DisplayName("signUpControllerTest")
-    void signUpControllerTest() throws Exception {
-        Object obj = new Object() {
-            public final String code = "1234";
-        };
-        String content = objectMapper.writeValueAsString(obj);
-
-        mockMvc.perform(post("/users/signup")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("signInControllerTest")
-    void signInControllerTest() throws Exception {
-        Object obj = new Object() {
-            public final String code = "1234";
-        };
-        String content = objectMapper.writeValueAsString(obj);
-
-        mockMvc.perform(post("/users/signin")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("getByIdControllerTest")
-    void getByIdControllerTest() throws Exception {
-        mockMvc.perform(get("/users/userInfo/123"))
-                .andExpect(status().is(200))
-                .andDo(print());
-    }
-
-    @Test
-    @DisplayName("getAllUserInfoControllerTest")
-    void getAllUserInfoControllerTest() throws Exception {
-        mockMvc.perform(get("/users/allUserInfo"))
-                .andExpect(status().is(200))
-                .andDo(print());
-    }
-
-
-
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Autowired
+//    private ObjectMapper objectMapper;
+//
+//    @MockBean
+//    private UserService userService;
+//
+//    @BeforeEach
+//    void setUp() {
+//        ModelMapper modelMapper = new ModelMapper();
+//        mockMvc = MockMvcBuilders.standaloneSetup(
+//                new UserController(userService, modelMapper)
+//        ).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
+//    }
+//
+//    @Test
+//    @DisplayName("signUpControllerTest")
+//    void signUpControllerTest() throws Exception {
+//        Object obj = new Object() {
+//            public final String code = "1234";
+//        };
+//        String content = objectMapper.writeValueAsString(obj);
+//
+//        mockMvc.perform(post("/users/signup")
+//                .content(content)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(200))
+//                .andDo(print());
+//    }
+//
+//    @Test
+//    @DisplayName("signInControllerTest")
+//    void signInControllerTest() throws Exception {
+//        Object obj = new Object() {
+//            public final String code = "1234";
+//        };
+//        String content = objectMapper.writeValueAsString(obj);
+//
+//        mockMvc.perform(post("/users/signin")
+//                .content(content)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(200))
+//                .andDo(print());
+//    }
+//
+//    @Test
+//    @DisplayName("getByIdControllerTest")
+//    void getByIdControllerTest() throws Exception {
+//        mockMvc.perform(get("/users/userInfo/123"))
+//                .andExpect(status().is(200))
+//                .andDo(print());
+//    }
+//
+//    @Test
+//    @DisplayName("getAllUserInfoControllerTest")
+//    void getAllUserInfoControllerTest() throws Exception {
+//        mockMvc.perform(get("/users/allUserInfo"))
+//                .andExpect(status().is(200))
+//                .andDo(print());
+//    }
 }

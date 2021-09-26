@@ -1,4 +1,6 @@
 server:
-  port: 8080
-
-foo: bar_dev
+  port: 8001
+spring :
+  data:
+    mongodb:
+      uri: mongodb://13.209.99.141:27017/UserManager
