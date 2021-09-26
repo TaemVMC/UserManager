@@ -9,7 +9,7 @@ on:
 #     types: [created]
   workflow_dispatch:
     inputs:
-      name:
+      destination_server:
         description: 'Server to deploy'
         required: True
         default: '13.124.249.181'
@@ -37,8 +37,11 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew clean build
+    - name: Save pem to file
+      run: printf ${{ secrets.EC2_PEM }} >> src/.env
+
     - name: Send file to EC2
-      run: scp -i "/.vmc.pem" build/libs/UserManager-0.0.1-SNAPSHOT.jar ubuntu@${{ github.event.inputs.root_page_url }}:/home/ubuntu/ 
+      run: scp -i "/.vmc.pem" build/libs/UserManager-0.0.1-SNAPSHOT.jar ubuntu@${{ github.event.inputs.destination_server }}:/home/ubuntu/ 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
 #     - name: Publish to GitHub Packages
