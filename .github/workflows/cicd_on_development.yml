@@ -61,7 +61,7 @@ jobs:
         host: ${{ env.DESTINATION_SERVER }}
         username: ubuntu
         key_path: ".vmc.pem"
-        source: "docker-compose.yml"
+        source: "docker-compose.dev.yml"
         target: "./"
 
         
@@ -73,5 +73,5 @@ jobs:
         key_path: ".vmc.pem"
         script: |
            docker-compose pull
-           docker-compose up -d
+           docker-compose -f docker-compose.dev.yml up -d
     ########################################################################
