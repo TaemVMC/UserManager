@@ -6,7 +6,7 @@ on:
       - development
 
 env:
-  DOCKER_HUB_REPO: on91716/dev.user_manager  # on91716/dev.${{ github.event.repository.name }}
+  DOCKER_HUB_REPO: on91716/dev.user-manager  # on91716/dev.${{ github.event.repository.name }}
   PROFILES: prod
   DESTINATION_SERVER: 3.37.123.157
 
