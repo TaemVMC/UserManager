@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKER_HUB_REPO: on91716/dev.user-manager  # on91716/dev.${{ github.event.repository.name }}
-  PROFILES: prod
+  PROFILES: dev
   DESTINATION_SERVER: 3.37.123.157
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        target: production
+        target: development
         tags: |
           ${{ env.DOCKER_HUB_REPO }}:latest
           ${{ env.DOCKER_HUB_REPO }}:${{ github.sha }}
@@ -75,4 +75,3 @@ jobs:
            docker-compose pull ${{ env.DOCKER_HUB_REPO }}
            docker-compose -f docker-compose.dev.yml up -d
     ########################################################################
-#12
