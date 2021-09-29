@@ -14,6 +14,9 @@ env:
 jobs:
   versioning_job:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.tag_version.outputs.new_tag }}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -35,7 +38,7 @@ jobs:
     - name: echo version
       id: version_step
       run: echo "::set-output name=version_number::${{ steps.tag_version.outputs.new_tag }}" 
-      
+
   ci_job:
     runs-on: ubuntu-latest
     needs: versioning_job
@@ -62,7 +65,7 @@ jobs:
         target: production
         tags: |
           ${{ env.DOCKER_HUB_REPO }}:latest
-          ${{ env.DOCKER_HUB_REPO }}:${{ jobs.versioning_job.steps.version_step.outputs.version_number }}
+          ${{ env.DOCKER_HUB_REPO }}:${{ needs.versioning_job.outputs.version }}
     ########################################################################
 
   cd_job:
