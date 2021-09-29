@@ -98,6 +98,6 @@ jobs:
         username: ubuntu
         key_path: ".vmc.pem"
         script: |
-           docker-compose pull $DOCKER_HUB_REPO
+           docker-compose pull ${{ env.DOCKER_HUB_REPO }}
            docker-compose up -d
     #######################################################################
