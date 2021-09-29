@@ -3,4 +3,4 @@ server:
 spring :
   data:
     mongodb:
-      uri: mongodb://13.209.99.141:27017/UserManager
+      uri: mongodb://3.35.214.234:27017/UserManager
