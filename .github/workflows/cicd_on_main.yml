@@ -1,9 +1,9 @@
-name: CI/CD on master branch
+name: CI/CD on main branch
 
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   DOCKER_HUB_REPO: on91716/user-manager #on91716/${{ github.event.repository.name }}
