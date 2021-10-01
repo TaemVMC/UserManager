@@ -1,6 +1,6 @@
 server:
-  port: 8001
+  port: 8080
 spring :
   data:
     mongodb:
-      uri: mongodb://3.35.206.97:27017/UserManager
+      uri: mongodb://3.37.127.25:27017/UserManager
