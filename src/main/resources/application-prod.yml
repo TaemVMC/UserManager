@@ -2,5 +2,7 @@ server:
   port: 8080
 spring :
   data:
+    jackson:
+      property-naming-strategy: SNAKE_CASE
     mongodb:
       uri: mongodb://3.37.127.25:27017/UserManager

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ResponseWrapper {
-    private final String code;
+    private final int code;
     private final String message;
     private final Object data;
 
