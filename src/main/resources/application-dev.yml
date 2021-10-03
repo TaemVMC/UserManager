@@ -1,8 +1,14 @@
 server:
   port: 8080
 spring :
-  jackson:
-    property-naming-strategy: SNAKE_CASE
   data:
+    jackson:
+      property-naming-strategy: SNAKE_CASE
     mongodb:
       uri: mongodb://13.209.68.198:27017/UserManager
+  kafka:
+    bootstrap-servers: 13.209.68.198:9092
+    consumer:
+      group-id: user-manager-group
+    topic:
+      sign-out-topic: "userManager.signOut"

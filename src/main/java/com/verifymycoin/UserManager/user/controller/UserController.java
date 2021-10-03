@@ -5,6 +5,7 @@ import com.verifymycoin.UserManager.common.response.AppCode;
 import com.verifymycoin.UserManager.common.response.ResponseWrapper;
 import com.verifymycoin.UserManager.user.domain.User;
 import com.verifymycoin.UserManager.user.domain.UserDto;
+import com.verifymycoin.UserManager.user.service.UserKafkaService;
 import com.verifymycoin.UserManager.user.service.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final UserKafkaService userKafkaService;
     private final ModelMapper modelMapper;
 
     @GetMapping("/{userId}")
@@ -62,6 +64,7 @@ public class UserController {
     public ResponseEntity<ResponseWrapper> withdrawal(@ApiParam("withdrawal User")
                                                           @RequestHeader String userId){
         userService.deleteByUserId(userId);
+        userKafkaService.sendSignOutMsg(userId);
         ResponseWrapper response = new ResponseWrapper(AppCode.SUCCESS);
         return ResponseEntity.ok(response);
     }

@@ -6,3 +6,9 @@ spring :
       property-naming-strategy: SNAKE_CASE
     mongodb:
       uri: mongodb://3.37.127.25:27017/UserManager
+  kafka:
+    bootstrap-servers: 3.37.127.25:9092
+    consumer:
+      group-id: user-manager-group
+    topic:
+      sign-out-topic: "userManager.signOut"
