@@ -31,13 +31,13 @@ public class UserController {
     private final UserKafkaService userKafkaService;
     private final ModelMapper modelMapper;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/info")
     @ApiOperation(value = "${UserController.userInfo}")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Something Wrong"),
             @ApiResponse(code = 403, message = "승인 거절"),
     })
-    public ResponseEntity<ResponseWrapper> getUserInfo(@PathVariable String userId) throws Exception {
+    public ResponseEntity<ResponseWrapper> getUserInfo(@RequestHeader String userId) throws Exception {
         Optional<User> user = userService.findByUserId(userId);
         ResponseWrapper response = new ResponseWrapper(AppCode.SUCCESS, transToUserDto(user.get()));
         return ResponseEntity.ok(response);

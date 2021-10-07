@@ -40,6 +40,4 @@ public class User {
                 .locale(jsonObject.getString("locale"))
                 .build();
     }
-
-
 }
