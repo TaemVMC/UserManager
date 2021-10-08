@@ -12,11 +12,3 @@ spring :
       group-id: user-manager-group
     topic:
       sign-out-topic: "userManager.signOut"
-
-logging:
-  file:
-    name: "/log/user-manager.log"
-  logback:
-    rollingpolicy:
-      max-file-size: 10MB
-      total-size-cap: 100MB
