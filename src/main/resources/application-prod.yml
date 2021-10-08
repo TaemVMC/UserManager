@@ -15,7 +15,7 @@ spring :
 
 logging:
   file:
-    name: "user-manager.log"
+    name: "/log/user-manager.log"
   logback:
     rollingpolicy:
       max-file-size: 10MB
